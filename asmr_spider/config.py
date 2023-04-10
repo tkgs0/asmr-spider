@@ -1,6 +1,6 @@
-from pydantic import BaseModel, Extra
 from pathlib import Path
-import yaml
+import sys, yaml
+from pydantic import BaseModel, Extra
 from loguru import logger
 from rich.progress import (
     BarColumn,
@@ -56,7 +56,7 @@ if not confpath.is_file():
     except Exception as e:
         logger.error(f := f"{confpath}: 创建配置文件失败!\n"+repr(e))
         progress.console.log(f, style='bold yellow on black')
-        exit(-1)
+        sys.exit(1)
 
 
 _config = yaml.safe_load(confpath.read_text('utf-8'))
