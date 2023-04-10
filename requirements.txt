@@ -1,0 +1,5 @@
+PyYAML
+httpx
+loguru
+pydantic
+rich
