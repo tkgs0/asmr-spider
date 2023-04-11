@@ -21,6 +21,8 @@ asmr RJ373001 RJ385913
 # `asmr` 后面接RJ号, 可输入多个, 使用空格隔开
 ```
 
+配置文件 `asmr_spider.yml` 和 音频目录 `Voice` 保存在命令执行时所在的路径
+
 <details>
   <summary>Import</summary>
 
@@ -31,6 +33,8 @@ async def demo():
     args = ['RJ373001', 'RJ385913']
     await dload(args)
 ```
+
+`asmr_spider.yml` 和 `Voice` 将保存在你自己的项目根路径
 
 </details>
 
