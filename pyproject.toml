@@ -25,7 +25,7 @@ python = "^3.9"
 PyYAML = ">=6.0"
 httpx = ">=0.23.0"
 loguru = ">=0.6.0"
-pydantic = ">=1.10.5"
+pydantic = "^1.10.5"
 rich = ">=13.0.0"
 ujson = ">=5.2.0"
 

@@ -1,5 +1,5 @@
 PyYAML
 httpx
 loguru
-pydantic
+pydantic~=1.10
 rich
