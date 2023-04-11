@@ -21,6 +21,19 @@ asmr RJ373001 RJ385913
 # `asmr` 后面接RJ号, 可输入多个, 使用空格隔开
 ```
 
+<details>
+  <summary>Import</summary>
+
+```python3
+from asmr_spider import dload
+
+async def demo():
+    args = ['RJ373001', 'RJ385913']
+    await dload(args)
+```
+
+</details>
+
 ## 致谢
 
 - 感谢 [地河酱](https://github.com/DiheChen), 地河酱yyds🤗
