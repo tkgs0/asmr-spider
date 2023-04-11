@@ -1,7 +1,6 @@
+from . import dload, logger
 import sys, asyncio
 from sys import argv
-from .spider import ASMRSpider
-from .config import logger
 
 
 def main():
@@ -11,16 +10,6 @@ def main():
     except KeyboardInterrupt:
         logger.error("进程被手动终止.")
         sys.exit(1)
-
-
-async def dload(args: list[str]):
-    try:
-        async with ASMRSpider() as spider:
-            for arg in args:
-                await spider.download(arg)
-    except Exception as e:
-        logger.exception(e)
-        raise e
 
 
 if __name__ == "__main__":
