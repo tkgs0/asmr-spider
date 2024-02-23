@@ -1,6 +1,6 @@
 from pathlib import Path
 import sys, yaml
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel, ConfigDict
 from loguru import logger
 from rich.progress import (
     BarColumn,
@@ -62,11 +62,12 @@ if not confpath.is_file():
 _config = yaml.safe_load(confpath.read_text('utf-8'))
 
 
-class Config(BaseModel, extra=Extra.ignore):
+class Config(BaseModel):
+    model_config = ConfigDict(extra="ignore")
     username: str = 'guest'
     password: str = 'guest'
     proxy: str = ''
     user_agent: str = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
 
-config = Config.parse_obj(_config)
+config = Config.model_validate(_config)

@@ -2,9 +2,22 @@
 
 本项目改编自 [DiheChen/go-asmr-spider](https://github.com/DiheChen/go-asmr-spider/tree/python)
 
-![](https://img.shields.io/badge/python-^3.9-blue.svg)
+<div>
+
+<a href="./LICENSE">
+    <img src="https://img.shields.io/github/license/tkgs0/asmr-spider.svg" alt="License">
+</a>
+<a href="https://pypi.python.org/pypi/asmr-spider">
+    <img src="https://img.shields.io/pypi/v/asmr-spider.svg" alt="PyPI">
+</a>
+<a href="https://www.python.org">
+    <img src="https://img.shields.io/badge/python-3.9+-blue.svg" alt="Python">
+</a>
+
+</div>
 
 一个简单的 <https://asmr.one> 爬虫。
+
 
 ## 使用
 
