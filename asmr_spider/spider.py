@@ -1,4 +1,4 @@
-import asyncio
+import asyncio,soundfile,os
 from typing import Any, Dict, List
 try:
     import ujson as json
@@ -8,21 +8,24 @@ from pathlib import Path
 from httpx import AsyncClient
 
 from .config import config, progress, logger
+from pydub import AudioSegment
 
 
 timeout: int = 120
 semaphore: int = 16
-
+default_audio_exts = ('.wav', '.flac', '.mp3')
+ffmpeg_audio_exts = ('.wma', '.ogg', '.m4a', '.ape', '.opus', '.aac', '.mka')
 
 class ASMRSpider:
 
-    def __init__(self) -> None:
+    def __init__(self,support_ffmpeg) -> None:
         self.name = config.username
         self.password = config.password
         self.headers = {
             "Referer": "https://www.asmr.one/",
             "User-Agent": config.user_agent,
         }
+        self.support_ffmpeg = support_ffmpeg
 
 
     async def login(self) -> None:
@@ -55,11 +58,50 @@ class ASMRSpider:
         return resp.json()
 
 
-    async def download_file(self, sem, url: str, save_path: Path, file_name: str) -> None:
+    def is_bad_file(self,file,file_time):
+        try:
+            is_bad = False
+            duration = 0.0
+            #ffmpeg 查看时长很慢，所以能使用其他库就不用ffmpeg      
+            if os.path.splitext(file)[-1].lower() in default_audio_exts:
+                data = soundfile.SoundFile(file)
+                duration = data.frames/data.samplerate
+
+            elif self.support_ffmpeg and os.path.splitext(file)[-1].lower() in ffmpeg_audio_exts:
+                sound = AudioSegment.from_file(file)
+                duration = sound.duration_seconds
+
+            else:
+                logger.info(f := (f"文件跳过检测: {file}"))
+                progress.console.log(f)
+                return False
+            
+            is_bad = (file_time - duration)>0.1
+            logger.info(f :=f"检测文件: {file},文件是否完全下载: {not is_bad}\n"
+                                    f"获取时长: {file_time},本地时长: {duration}")
+            progress.console.log(f)
+            return is_bad
+        
+        except Exception as e:
+                print(str(e)) 
+                logger.exception(e)
+                raise e                 
+
+
+    async def download_file(self, sem, url: str, save_path: Path, file_name: str,file_time: float) -> None:
         file_name = file_name.translate(str.maketrans(r'/\:*?"<>|', "_________"))
         file_path = save_path / file_name
-        if not file_path.exists():
+        #筛选是否重新下载
+        is_checked_not_pass = True
+        if file_path.exists():
+            if self.checkAction == 'check':
+                is_checked_not_pass = self.is_bad_file(file_path,file_time)
+            elif self.checkAction == 'nocheck':
+                    is_checked_not_pass = False
+            elif self.checkAction == 'redownload':
+                    is_checked_not_pass = True
 
+        if not file_path.exists() or is_checked_not_pass:
             async with sem:
                 async with self.client.stream(
                     "GET", url=url,
@@ -102,9 +144,14 @@ class ASMRSpider:
         sem = asyncio.Semaphore(semaphore)
         down: list = []
         for file in files:
-            down.append(
-                self.download_file(sem, file["mediaDownloadUrl"], root_path, file["title"])
-            )
+            if "duration" in file:
+                down.append(
+                    self.download_file(sem, file["mediaDownloadUrl"], root_path, file["title"],file["duration"])
+                )
+            else:
+                  down.append(
+                    self.download_file(sem, file["mediaDownloadUrl"], root_path, file["title"],0)
+                )
         with progress:
             await asyncio.gather(*down)
 
@@ -114,7 +161,8 @@ class ASMRSpider:
             await self.ensure_dir(folder["children"], new_path)
 
 
-    async def download(self, voice_id: str) -> None:
+    async def download(self, voice_id: str,action) -> None:
+        self.checkAction = action
         voice_id = voice_id.strip().split("RJ")[-1]
         voice_info = await self.get_voice_info(voice_id)
 
