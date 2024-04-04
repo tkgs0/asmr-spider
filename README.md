@@ -39,7 +39,6 @@
 [ffmpeg Documentation](https://www.ffmpeg.org/)  
 [ffprobe Documentation](https://www.ffmpeg.org/ffprobe.html)  
   
-使用 `ffmpeg` 请参照官方部署方案并配置到环境变量中  
 目前 `ffmpeg` 分析很慢, 平均一个文件3s以上  
   
   
@@ -87,7 +86,7 @@
 <details>
   <summary>Windows安装</summary>
 
-  手动安装[FFmpeg](https://www.ffmpeg.org/download.html)
+  请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
 
 </details>
 
