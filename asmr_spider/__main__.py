@@ -14,9 +14,9 @@ parser.add_argument(
     help='是否检查已下载内容, check检查, redownload重新下载, nocheck跳过已下载内容, 默认check'
 )
 
-args = parser.parse_args()
 def main():
     try:
+        args = parser.parse_args()
         args.input = args.input or input("\033[33;1m请输入RJ号\033[0m: ").split()
         asyncio.run(dload(args.input, args.action))
     except KeyboardInterrupt:
