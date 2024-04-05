@@ -124,7 +124,8 @@ from asmr_spider import dload
 
 async def demo():
     args = ['RJ373001', 'RJ385913']
-    await dload(args)
+    action = 'check'  # 'check', 'redownload', 'nocheck'
+    await dload(args, action)
 ```
 
 `asmr_spider.yml` 和 `Voice` 将保存在你自己的项目根路径
