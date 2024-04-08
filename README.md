@@ -49,6 +49,7 @@
 
 <details>
   <summary>Install ffmpeg or libsndfile</summary>
+
   <details>
     <summary>Debian/Ubuntu安装</summary>
 
@@ -90,6 +91,7 @@
     请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
 
   </details>
+
 </details>
 
 
