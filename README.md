@@ -49,30 +49,34 @@
 
 <details>
   <summary>Install ffmpeg or libsndfile</summary>
-  <details>
-    <summary>Debian/Ubuntu安装</summary>
-    ```
-    apt update && apt install ffmpeg
-    ```
-    **或者**:
-    ```
-    apt update && apt install libsndfile1
-    ```
-    <summary>ArchLinux安装</summary>
-    ```
-    pacman -Syu ffmpeg
-    ```
-    **或者**:
-    ```
-    pacman -Syu libsndfile
-    ```
-    <summary>Mac安装</summary>
-    ```
-    brew install ffmpeg
-    ```
-    <summary>Windows安装</summary>
-    请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
-  </details>
+  **Debian/Ubuntu安装:**
+  ```
+  apt update && apt install ffmpeg
+  ```
+  **或者**:
+  ```
+  apt update && apt install libsndfile1
+  ```
+  <br>
+  <br>
+  **ArchLinux安装:**
+  ```
+  pacman -Syu ffmpeg
+  ```
+  **或者**:
+  ```
+  pacman -Syu libsndfile
+  ```
+  <br>
+  <br>
+  **Mac安装:**
+  ```
+  brew install ffmpeg
+  ```
+  <br>
+  <br>
+  **Windows安装:**
+  请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
 </details>
 
 
