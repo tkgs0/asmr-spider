@@ -1,7 +1,24 @@
 from .spider import ASMRSpider
 from .config import logger, progress
 from typing import List
-import shutil
+import argparse, shutil
+
+
+parser = argparse.ArgumentParser(description='Spide form asmr.one')
+
+parser.add_argument(
+    'input',
+    help="输入RJ号, 空格分隔",
+    nargs='*'
+)
+
+parser.add_argument(
+    '-a', '--action',
+    choices=['check', 'redownload', 'nocheck'],
+    default='check',
+    help='是否检查已下载内容, check检查, redownload重新下载, nocheck跳过已下载内容, 默认check'
+)
+
 
 async def dload(args: List[str], action):
     try:
