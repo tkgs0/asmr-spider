@@ -80,8 +80,9 @@
 
   <br>
 
-  **Windows安装:**
-    请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
+  **Windows安装:**  
+  
+  请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
 
 </details>
 
