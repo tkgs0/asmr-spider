@@ -49,6 +49,7 @@
 
 <details>
   <summary>Install ffmpeg or libsndfile</summary>
+  <br>
 
   **Debian/Ubuntu安装:**
   ```zsh
@@ -59,7 +60,6 @@
   apt update && apt install libsndfile1
   ```
 
-  <br>
   <br>
 
   **ArchLinux安装:**
@@ -72,7 +72,6 @@
   ```
 
   <br>
-  <br>
 
   **Mac安装:**
   ```zsh
@@ -80,10 +79,9 @@
   ```
 
   <br>
-  <br>
 
   **Windows安装:**
-  请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
+    请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
 
 </details>
 
