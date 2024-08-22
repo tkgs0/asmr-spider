@@ -24,15 +24,19 @@
 - [x] 文件检查 (通过时长)
 - [x] 错误文件重新下载
 - [x] 支持更多格式 (通过 `ffmpeg` 和 `ffprobe`)
-- [ ] ffmpeg的分析很慢, 寻找更好的方式
+- [x] ffmpeg的分析很慢, 寻找更好的方式（检测大小或许能替代？）
 - [ ] 指定下载路径
 - [ ] 下载文件中途停止记录
-- [ ] 断点续传
+- [x] 断点续传
 - [ ] 下载自动分类配置
 
 
 ## 使用
 
+### 音频大小对比模式
+支持断点续传
+
+### 音频时长分析模式
 不使用 `ffmpeg` 和 `ffprobe` 时仅支持 `mp3` `wav` `flac` 格式的音频分析  
   
 [ffmpeg Documentation](https://www.ffmpeg.org/)  
@@ -46,6 +50,7 @@
 未安装**ffmpeg**时可能会报缺少**libsndfile**等运行库,  
 仍需要另外安装相关依赖.
   
+在使用**checktime**进行时长检测部分mp3内容时,获取的时长差异过大，同时在错误状态下仍然会检测为正常状态（如RJ172342），故默认使用时长检测时仍保留重新下载的模式。
 
 <details>
   <summary>Install ffmpeg or libsndfile</summary>
@@ -100,8 +105,11 @@ pip install -U asmr-spider
 #直接下载, 默认检查重复
 asmr RJ373001 RJ385913
 #或者
-asmr RJ373001 RJ385913 -a check
+asmr RJ373001 RJ385913 -a checksize
 # `asmr` 后面接RJ号, 可输入多个, 使用空格隔开
+
+#通过时长检测重复内容,目前不支持断点续传
+asmr RJ373001 RJ385913 -a checktime
 
 #禁用检查, 跳过已下载的文件
 asmr RJ373001 RJ385913 -a nocheck
@@ -120,7 +128,7 @@ from asmr_spider import dload
 
 async def demo():
     args = ['RJ373001', 'RJ385913']
-    action = 'check'  # 'check', 'redownload', 'nocheck'
+    action = 'checksize'  # 'checksize', 'checktime','redownload', 'nocheck'
     await dload(args, action)
 ```
 
