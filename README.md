@@ -46,6 +46,7 @@
 
 <details>
   <summary>Install ffmpeg or libsndfile</summary>
+  <br />
   <details>
     <summary>Debian/Ubuntu安装</summary>
 
