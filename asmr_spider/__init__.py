@@ -13,10 +13,10 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    '-a', '--action',
+    '-a',
     choices=['checksize', 'checktime', 'redown', 'nocheck'],
     default='checksize',
-    help='检查已下载内容: checksize 对比文件大小; checktime 对比音频时长; redown 重新下载; nocheck 禁用检查; 默认 checksize'
+    help='checksize 对比文件大小; checktime 对比音频时长; redown 重新下载; nocheck 禁用检查; 默认为 checksize'
 )
 
 
