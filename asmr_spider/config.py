@@ -17,6 +17,27 @@ class Config(BaseModel):
     password: str = 'guest'
     proxy: str = ''
     user_agent: str = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+    dir_path: str = './Voice'
+    timeout: float = 120
+    semaphore: int = 16
+
+
+default_config: str = """
+
+username: '{conf.username}'  # Your username
+password: '{conf.password}'  # Your password
+proxy: '{conf.proxy}'  # Your magic
+
+user_agent: '{conf.user_agent}'  # Your User-Agent
+
+dir_path: '{conf.dir_path}'  # 存放路径
+
+timeout: '{conf.timeout}'
+semaphore: '{conf.semaphore}'
+
+""".strip().format(conf = Config.model_validate({}))
+
+
 
 
 logpath: Path = Path() / 'logs' / 'spider.log'
@@ -27,7 +48,7 @@ fmt: str = "<g>{time:MM-DD HH:mm:ss}</g> [<lvl>{level}</lvl>] | {message}"
 logger.add(
     logpath,
     format=fmt,
-    rotation="1 day",
+    rotation="3 day",
 )
 
 
@@ -40,17 +61,6 @@ progress: Progress = Progress(
     "•",
     TransferSpeedColumn(),
 )
-
-
-default_config: str = f"""
-
-username: '{Config.username}'  # Your username
-password: '{Config.password}'  # Your password
-proxy: '{Config.proxy}'  # Your magic
-
-user_agent: '{Config.user_agent}'  # Your User-Agent
-
-""".strip()
 
 
 confpath: Path = Path() / 'asmr_spider.yml'
