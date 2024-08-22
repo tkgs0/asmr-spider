@@ -11,6 +11,14 @@ from rich.progress import (
 )
 
 
+class Config(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    username: str = 'guest'
+    password: str = 'guest'
+    proxy: str = ''
+    user_agent: str = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+
+
 logpath: Path = Path() / 'logs' / 'spider.log'
 logpath.parent.mkdir(parents=True, exist_ok=True)
 
@@ -34,13 +42,13 @@ progress: Progress = Progress(
 )
 
 
-default_config: str = """
+default_config: str = f"""
 
-username: 'guest'  # Your username
-password: 'guest'  # Your password
-proxy: ''  # Your magic
+username: '{Config.username}'  # Your username
+password: '{Config.password}'  # Your password
+proxy: '{Config.proxy}'  # Your magic
 
-user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'  # Your User-Agent
+user_agent: '{Config.user_agent}'  # Your User-Agent
 
 """.strip()
 
@@ -60,14 +68,6 @@ if not confpath.is_file():
 
 
 _config = yaml.safe_load(confpath.read_text('utf-8'))
-
-
-class Config(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    username: str = 'guest'
-    password: str = 'guest'
-    proxy: str = ''
-    user_agent: str = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
 
 
 config = Config.model_validate(_config)
