@@ -67,7 +67,4 @@ if not confpath.is_file():
         sys.exit(1)
 
 
-_config = yaml.safe_load(confpath.read_text('utf-8'))
-
-
-config = Config.model_validate(_config)
+config = Config.model_validate(yaml.safe_load(confpath.read_text('utf-8')))
