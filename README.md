@@ -16,47 +16,39 @@
 
 </div>
 
-一个简单的 <https://asmr.one> 爬虫
+一个简单的 [ASMR](https://asmr.one) 爬虫
 
 
 ## TODO
 
-- [x] 文件检查 (通过时长)
-- [x] 错误文件重新下载
-- [x] 支持更多格式 (通过 `ffmpeg` 和 `ffprobe`)
-- [x] ffmpeg的分析很慢, 寻找更好的方式（检测大小或许能替代？）
-- [ ] 指定下载路径
-- [ ] 下载文件中途停止记录
-- [x] 断点续传
-- [ ] 下载自动分类配置
+- [ ] 多线程下载
+- [ ] 下载自动分类
 
 
 ## 使用
 
-### 音频大小对比模式
+### 音频体积对比模式
+
 支持断点续传
 
 ### 音频时长分析模式
-不使用 `ffmpeg` 和 `ffprobe` 时仅支持 `mp3` `wav` `flac` 格式的音频分析  
-  
-[ffmpeg Documentation](https://www.ffmpeg.org/)  
-[ffprobe Documentation](https://www.ffmpeg.org/ffprobe.html)  
-  
-目前 `ffmpeg` 分析很慢, 平均一个文件3s以上  
-  
-  
+
+不使用 `ffmpeg` 和 `ffprobe` 时仅支持 `mp3` `wav` `flac` 格式的音频分析
+
+- [ffmpeg Documentation](https://www.ffmpeg.org/)
+- [ffprobe Documentation](https://www.ffmpeg.org/ffprobe.html)
+
+
 ### 已知问题
 
-未安装**ffmpeg**时可能会报缺少**libsndfile**等运行库,  
-仍需要另外安装相关依赖.
-  
-在使用**checktime**进行时长检测部分mp3内容时,获取的时长差异过大，同时在错误状态下仍然会检测为正常状态（如RJ172342），故默认使用时长检测时仍保留重新下载的模式。
+- 未安装 **ffmpeg** 时可能会报缺少 **libsndfile** 等运行库, 需要另外安装相关依赖.
 
 <details>
   <summary>Install ffmpeg or libsndfile</summary>
-  <br>
+  <br />
+  <details>
+    <summary>Debian/Ubuntu安装</summary>
 
-  **Debian/Ubuntu安装:**
   ```zsh
   apt update && apt install ffmpeg
   ```
@@ -65,9 +57,10 @@
   apt update && apt install libsndfile1
   ```
 
-  <br>
+  </details>
+  <details>
+    <summary>ArchLinux安装</summary>
 
-  **ArchLinux安装:**
   ```zsh
   pacman -Syu ffmpeg
   ```
@@ -76,19 +69,21 @@
   pacman -Syu libsndfile
   ```
 
-  <br>
+  </details>
+  <details>
+    <summary>Mac安装</summary>
 
-  **Mac安装:**
   ```zsh
   brew install ffmpeg
   ```
 
-  <br>
+  </details>
+  <details>
+    <summary>Windows安装</summary>
 
-  **Windows安装:**  
-  
   请参考 [ffmpeg Documentation](https://www.ffmpeg.org/) 自行解决
 
+  </details>
 </details>
 
 
@@ -111,14 +106,14 @@ asmr RJ373001 RJ385913 -a checksize
 #通过时长检测重复内容,目前不支持断点续传
 asmr RJ373001 RJ385913 -a checktime
 
-#禁用检查, 跳过已下载的文件
+#禁用检查, 跳过已存在的文件
 asmr RJ373001 RJ385913 -a nocheck
 
 #强制重新下载所有文件
-asmr RJ373001 RJ385913 -a redownload
+asmr RJ373001 RJ385913 -a redown
 ```
 
-配置文件 `asmr_spider.yml` 和 音频目录 `Voice` 保存在命令执行时所在的路径
+配置文件 `asmr_spider.yml` 保存在命令执行时所在的路径
 
 <details>
   <summary>Import</summary>
@@ -128,15 +123,14 @@ from asmr_spider import dload
 
 async def demo():
     args = ['RJ373001', 'RJ385913']
-    action = 'checksize'  # 'checksize', 'checktime','redownload', 'nocheck'
+    action = 'checksize'  # 'checksize', 'checktime','redown', 'nocheck'
     await dload(args, action)
 ```
-
-`asmr_spider.yml` 和 `Voice` 将保存在你自己的项目根路径
 
 </details>
 
 ## 致谢
 
 - 感谢 [地河酱](https://github.com/DiheChen), 地河酱yyds🤗
-- 感谢 <https://asmr.one>, 现在每天都有不同的女孩子陪我睡觉。
+- 感谢 [Kotobasutop](https://github.com/c2879351010) 对 ASMR-Spider 作出的贡献
+- 感谢 asmr.one, 现在每天都有不同的女孩子陪我睡觉。
