@@ -11,15 +11,41 @@ from rich.progress import (
 )
 
 
+class Config(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    username: str = 'guest'
+    password: str = 'guest'
+    proxy: str = ''
+    user_agent: str = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
+    timeout: float = 120
+    dir_path: str = './Voice'
+    semaphore: int = 8
+
+
+default_config: str = """
+
+username: '{conf.username}'  # Your username
+password: '{conf.password}'  # Your password
+proxy: '{conf.proxy}'  # Your magic
+
+user_agent: '{conf.user_agent}'  # Your User-Agent
+timeout: '{conf.timeout}'
+
+dir_path: '{conf.dir_path}'  # Specify the storage path
+
+semaphore: '{conf.semaphore}'
+# The 'semaphore' should be less than or equal to the CPU cores
+
+""".strip().format(conf = Config.model_validate({}))
+
+
 logpath: Path = Path() / 'logs' / 'spider.log'
 logpath.parent.mkdir(parents=True, exist_ok=True)
 
-logger.remove()
-fmt: str = "<g>{time:MM-DD HH:mm:ss}</g> [<lvl>{level}</lvl>] | {message}"
 logger.add(
     logpath,
-    format=fmt,
-    rotation="1 day",
+    format="<g>{time:MM-DD HH:mm:ss}</g> [<lvl>{level}</lvl>] | {message}",
+    rotation="3 day",
 )
 
 
@@ -32,17 +58,6 @@ progress: Progress = Progress(
     "•",
     TransferSpeedColumn(),
 )
-
-
-default_config: str = """
-
-username: 'guest'  # Your username
-password: 'guest'  # Your password
-proxy: ''  # Your magic
-
-user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'  # Your User-Agent
-
-""".strip()
 
 
 confpath: Path = Path() / 'asmr_spider.yml'
@@ -59,15 +74,4 @@ if not confpath.is_file():
         sys.exit(1)
 
 
-_config = yaml.safe_load(confpath.read_text('utf-8'))
-
-
-class Config(BaseModel):
-    model_config = ConfigDict(extra="ignore")
-    username: str = 'guest'
-    password: str = 'guest'
-    proxy: str = ''
-    user_agent: str = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)'
-
-
-config = Config.model_validate(_config)
+config = Config.model_validate(yaml.safe_load(confpath.read_text('utf-8')))
