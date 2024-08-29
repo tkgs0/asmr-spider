@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asmr-spider"
-version = "0.2.2"
+version = "0.3.3"
 description = "asmr.one 音声下载器"
 authors = ["月ヶ瀬"]
 license = "GPL-3.0"
@@ -15,23 +15,23 @@ keywords = ["ASMR", "ASMR Downloader"]
 [tool.poetry.dependencies]
 python = "^3.9"
 PyYAML = ">=6.0"
-httpx = ">=0.23.0"
-loguru = ">=0.6.0"
-pydantic = "^2.1.1"
-rich = ">=13.0.0"
-soundfile = ">=0.12.1"
+httpx = ">=0.26.0"
+loguru = ">=0.7.0"
+pydantic = "^2.8.0"
 pydub = ">=0.25.1"
+rich = ">=13.5.0"
+soundfile = ">=0.12.1"
 
 [tool.poetry.dev-dependencies]
 python = "^3.9"
 PyYAML = ">=6.0"
-httpx = ">=0.23.0"
-loguru = ">=0.6.0"
-pydantic = "^2.1.1"
-rich = ">=13.0.0"
-ujson = ">=5.2.0"
-soundfile = ">=0.12.1"
+httpx = ">=0.26.0"
+loguru = ">=0.7.0"
+pydantic = "^2.8.0"
 pydub = ">=0.25.1"
+rich = ">=13.5.0"
+ujson = ">=5.8.0"
+soundfile = ">=0.12.1"
 
 [tool.poetry.scripts]
 asmr = "asmr_spider.__main__:main"
