@@ -77,19 +77,17 @@ class ASMRSpider:
                 duration = sound.duration_seconds
 
             else:
-                logger.info(e := f"文件跳过检测: {file_path}")
-                progress.console.log(e, style='bold yellow on black')
+                progress.console.log(f"文件跳过检测: {file_path}", style='bold yellow on black')
                 return False
 
             is_bad: bool = (file_time - duration) > 0.1
 
-            logger.info(e := f"检测文件: {file_path}, 文件完整性: {not is_bad}; \n上游时长: {file_time}, 本地时长: {duration}")
-            progress.console.log(e, style='bold yellow on black')
+            progress.console.log(f"检测文件: {file_path}, 文件完整性: {not is_bad}; \n上游时长: {file_time}, 本地时长: {duration}", style='bold yellow on black')
 
             return is_bad
 
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             progress.console.log(repr(e))
             raise e
 
@@ -110,7 +108,7 @@ class ASMRSpider:
             timeout=timeout
         ) as resp_get_length:
             if resp_get_length.status_code != 200:
-                logger.exception(e := f"无法从上游获取文件大小, 状态码: {resp_get_length.status_code}; \n将跳过体积校验")
+                logger.error(e := f"无法从上游获取文件大小, 状态码: {resp_get_length.status_code}; \n将跳过体积校验")
                 progress.console.log(e, style='bold red on black')
                 return False
 
@@ -122,8 +120,7 @@ class ASMRSpider:
 
             is_bad: bool = (remote_size - file_size) > 0 or remote_size == -1
 
-            logger.info(e := f"检测文件: {file_name}, 文件完整性: {not is_bad}; \n上游体积: {remote_size}, 本地体积: {file_size}", style='bold yellow on black')
-            progress.console.log(e)
+            progress.console.log(f"检测文件: {file_name}, 文件完整性: {not is_bad}; \n上游体积: {remote_size}, 本地体积: {file_size}", style='bold yellow on black')
 
             return is_bad
 
@@ -197,8 +194,7 @@ class ASMRSpider:
                                 break
 
                     await asyncio.to_thread(progress.remove_task, task_id)
-                    logger.success(e := f"{file_path}: Success.")
-                    progress.console.log(e)
+                    progress.console.log(f"{file_path}: Success.")
 
 
     async def ensure_dir(self, tracks: List[Dict[str, Any]],
