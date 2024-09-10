@@ -89,7 +89,7 @@ class ASMRSpider:
             return is_bad
 
         except Exception as e:
-            logger.exception(e)
+            logger.error(e)
             progress.console.log(repr(e))
             raise e
 
@@ -110,7 +110,7 @@ class ASMRSpider:
             timeout=timeout
         ) as resp_get_length:
             if resp_get_length.status_code != 200:
-                logger.exception(e := f"无法从上游获取文件大小, 状态码: {resp_get_length.status_code}; \n将跳过体积校验")
+                logger.warning(e := f"无法从上游获取文件大小, 状态码: {resp_get_length.status_code}; \n将跳过体积校验")
                 progress.console.log(e, style='bold red on black')
                 return False
 
@@ -122,8 +122,8 @@ class ASMRSpider:
 
             is_bad: bool = (remote_size - file_size) > 0 or remote_size == -1
 
-            logger.info(e := f"检测文件: {file_name}, 文件完整性: {not is_bad}; \n上游体积: {remote_size}, 本地体积: {file_size}", style='bold yellow on black')
-            progress.console.log(e)
+            logger.info(e := f"检测文件: {file_name}, 文件完整性: {not is_bad}; \n上游体积: {remote_size}, 本地体积: {file_size}")
+            progress.console.log(e, style='bold yellow on black')
 
             return is_bad
 

@@ -45,7 +45,7 @@ logpath.parent.mkdir(parents=True, exist_ok=True)
 logger.add(
     logpath,
     format="<g>{time:MM-DD HH:mm:ss}</g> [<lvl>{level}</lvl>] | {message}",
-    rotation="3 day",
+    rotation="7 day",
 )
 
 

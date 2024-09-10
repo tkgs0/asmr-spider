@@ -1,8 +1,11 @@
-from . import parser, dload, logger
 import sys, asyncio
+from loguru import logger
+logger.remove()
 
 
 def main():
+    from . import parser, dload, logger
+
     try:
         args = parser.parse_args()
         args.input = args.input or input("\033[33;1m请输入RJ号\033[0m: ").split()
